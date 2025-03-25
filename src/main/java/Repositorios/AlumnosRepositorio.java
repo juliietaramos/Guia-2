@@ -27,26 +27,6 @@ public class AlumnosRepositorio implements Repositorio<AlumnosEntidad> {
         return instance;
     }
 
-//    @Override
-//    public void guardar(AlumnosEntidad alumnosEntidad) {
-//        HikariConfig config = new HikariConfig();
-//        config.setMaximumPoolSize(10);
-//        HikariDataSource dataSource = new HikariDataSource(config);
-//        try (Connection connection = dataSource.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement
-//                     ("INSERT INTO alumnos (nombre , apellido , edad , email) VALUES(?, ?, ?, ?)")){
-//            preparedStatement.setString(1, alumnosEntidad.getNombre());
-//            preparedStatement.setString(2,alumnosEntidad.getApellido());
-//            preparedStatement.setInt(3,alumnosEntidad.getEdad());
-//            preparedStatement.setString(4, alumnosEntidad.getEmail());
-//            preparedStatement.executeUpdate();
-//
-//        }catch (SQLException exception){
-//            System.out.println(exception.getMessage());
-//        }
-//
-//    }
-
     @Override
     public void guardar(AlumnosEntidad alumnosEntidad) {
         try (Connection connection = SQLiteConeccion.getConnection();
@@ -103,6 +83,7 @@ public class AlumnosRepositorio implements Repositorio<AlumnosEntidad> {
                 }
             }
         } catch (SQLException e) {
+            System.out.println("Error inesperado al momento de listar.");
             System.out.println(e.getMessage());
         }
         return listaDeAlumnos;
@@ -116,6 +97,7 @@ public class AlumnosRepositorio implements Repositorio<AlumnosEntidad> {
             preparedStatement.setInt(2, id);
             int filasModificadas = preparedStatement.executeUpdate();
         } catch (SQLException exception) {
+            System.out.println("No se pudo modificar la edad del alumno indicado.");
             System.out.println(exception.getMessage());
         }
     }

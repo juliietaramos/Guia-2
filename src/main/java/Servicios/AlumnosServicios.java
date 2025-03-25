@@ -25,6 +25,10 @@ public class AlumnosServicios {
         return instance;
     }
 
+    public AlumnosRepositorio getAlumnosRepositorio() {
+        return alumnosRepositorio;
+    }
+
     private AlumnosEntidad crearAlumno(String nombre, String apellido, int edad, String email) throws SQLException {
         AlumnosEntidad alumno = new AlumnosEntidad(apellido, nombre, edad, email);
 //        Optional<AlumnosEntidad> usuarioExistente = AlumnosRepositorio
@@ -57,6 +61,7 @@ public class AlumnosServicios {
                 System.out.println("Edad modificada con exito.");
             }
         } catch (SQLException e) {
+            System.out.println("Ocurrio un error al intentar modificar la edad.");
             System.out.println(e.getMessage());
         }
     }
@@ -69,6 +74,7 @@ public class AlumnosServicios {
                 direccionRepositorio.eliminar(id);
             }
         }catch (SQLException e){
+            System.out.println("Ocurrio un error al intentar eliminar el alumno");
             System.out.println(e.getMessage());
         }
     }

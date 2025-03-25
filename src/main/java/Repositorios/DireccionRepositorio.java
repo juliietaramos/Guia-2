@@ -18,7 +18,6 @@ public class DireccionRepositorio implements Repositorio<DireccionEntidad> {
     private DireccionRepositorio() {
     }
 
-    ;
 
     public static DireccionRepositorio getInstanceOf() {
         if (instance == null) {
@@ -82,6 +81,7 @@ public class DireccionRepositorio implements Repositorio<DireccionEntidad> {
                 }
             }
         }catch(SQLException e){
+            System.out.println("No se pudo listar las direcciones del alumno.");
             System.out.println(e.getMessage());
         }
         return listaDirecciones;
@@ -96,6 +96,7 @@ public class DireccionRepositorio implements Repositorio<DireccionEntidad> {
             int filasBoradas = preparedStatement.executeUpdate();
             System.out.println("Se han eliminado " + filasBoradas + " direcciones correctamente.");
         }catch (Exception e){
+            System.out.println("Ocurrio un error al intentar eliminar la/s direccines");
             System.out.println(e.getMessage());
         }
     }
