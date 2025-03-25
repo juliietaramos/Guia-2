@@ -9,4 +9,5 @@ public interface Repositorio <T>{
     public void guardar(T t);
     public Optional<T>encontrarPorId(int id) throws SQLException;
     //public List<T> listar();
+    public void eliminar(int id);
 }

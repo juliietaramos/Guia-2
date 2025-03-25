@@ -83,17 +83,13 @@ public class Main {
                     System.out.println(DireccionRepositorio.getInstanceOf().listarPorId(idAlumno));
                     break;
                 case 5:
-//                    System.out.println("Ingrese el ID del alumno:");
-//                    int idActualizar = scanner.nextInt();
-//                    scanner.nextLine(); // Consumir el salto de línea
-//                    System.out.println("Ingrese la nueva edad del alumno:");
-//                    int nuevaEdad = scanner.nextInt();
-//                    scanner.nextLine(); // Consumir el salto de línea
-//                    try {
-//                        alumnosServicios.actualizarEdadAlumno(idActualizar, nuevaEdad);
-//                    } catch (SQLException e) {
-//                        System.out.println("Error al actualizar la edad del alumno: " + e.getMessage());
-//                    }
+                    System.out.println("Ingrese el ID del alumno:");
+                    int idActualizar = scanner.nextInt();
+                    scanner.nextLine(); // Consumir el salto de línea
+                    System.out.println("Ingrese la nueva edad del alumno:");
+                    int nuevaEdad = scanner.nextInt();
+                    scanner.nextLine(); // Consumir el salto de línea
+                        AlumnosServicios.getInstanceOf().modificarEdad(idActualizar,nuevaEdad);
                     break;
                 case 6:
 //                    System.out.println("Ingrese el ID del alumno:");

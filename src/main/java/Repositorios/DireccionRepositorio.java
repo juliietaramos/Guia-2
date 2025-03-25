@@ -86,4 +86,17 @@ public class DireccionRepositorio implements Repositorio<DireccionEntidad> {
         }
         return listaDirecciones;
     }
+
+    @Override
+    public void eliminar(int id) {
+        String sql = "DELETE from direcciones WHERE alumno_id = ?;";
+        try(Connection connection = SQLiteConeccion.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setInt(1,id);
+            int filasBoradas = preparedStatement.executeUpdate();
+            System.out.println("Se han eliminado " + filasBoradas + " direcciones correctamente.");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 }
