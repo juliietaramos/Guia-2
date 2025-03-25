@@ -1,5 +1,7 @@
 package Entidades;
 
+import Repositorios.DireccionRepositorio;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,13 +86,20 @@ public class AlumnosEntidad {
 
     @Override
     public String toString() {
-        return "AlumnosEntity{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", edad=" + edad +
-                ", email='" + email + '\'' +
-                ", direcciones=" + direcciones +
-                '}';
+        String mensaje = ("|ID: " + id +
+                " | Nombre: " + nombre +
+                " | Apellido: " + apellido +
+                " | Edad: " + edad +
+                " | Email: " + email +
+                " | Direcciones: " + DireccionRepositorio.getInstanceOf().listarPorId(id).toString() +
+                " | ");
+//        return  "| id=" + id +
+//                " | nombre='" + nombre + '\'' +
+//                " | apellido='" + apellido + '\'' +
+//                " | edad=" + edad +
+//                " | email='" + email + '\'' +
+//                " | direcciones=" + direcciones +
+//                " | \n ";
+        return mensaje;
     }
 }

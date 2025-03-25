@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -79,5 +81,27 @@ public class AlumnosRepositorio implements Repositorio<AlumnosEntidad> {
             System.out.println("Ocurrió un error inesperado en encontrarPorId: " + e.getMessage());
         }
         return Optional.empty();
+    }
+
+    public List<AlumnosEntidad> listar() {
+        List<AlumnosEntidad> listaDeAlumnos = new ArrayList<>();
+        String sql = "SELECT * from alumnos;";
+        try(Connection connection = SQLiteConeccion.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()){
+                    AlumnosEntidad nuevo = new AlumnosEntidad(
+                            resultSet.getInt("id"),
+                            resultSet.getString("nombre"),
+                            resultSet.getString("apellido"),
+                            resultSet.getInt("edad"),
+                            resultSet.getString("email"));
+                    listaDeAlumnos.add(nuevo);
+                }
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return listaDeAlumnos;
     }
 }

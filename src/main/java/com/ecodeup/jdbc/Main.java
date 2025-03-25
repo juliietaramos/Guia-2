@@ -2,6 +2,7 @@ package com.ecodeup.jdbc;
 
 import Entidades.AlumnosEntidad;
 import Repositorios.AlumnosRepositorio;
+import Repositorios.DireccionRepositorio;
 import Servicios.AlumnosServicios;
 import Servicios.DireccionServicios;
 
@@ -28,7 +29,7 @@ public class Main {
             System.out.println("1. Insertar un Nuevo Alumno");
             System.out.println("2. Insertar una nueva dirección");
             System.out.println("3. Listar Todos los Alumnos");
-            System.out.println("4. Listar todas las direcciones");
+            System.out.println("4. Listar todas las direcciones por alumno");
             System.out.println("5. Actualizar la Edad de un Alumno");
             System.out.println("6. Eliminar un Alumno");
             System.out.println("7. Eliminar una dirección");
@@ -71,13 +72,15 @@ public class Main {
                     }
                     break;
                 case 3:
+                    System.out.println("Listado de alumnos: ");
+                    System.out.println(AlumnosRepositorio.getInstanceOf().listar());
 //                    alumnosServicios.listarTodosLosAlumnos();
                     break;
                 case 4:
-//                    System.out.println("Ingrese el ID del alumno:");
-//                    int idAlumno = scanner.nextInt();
-//                    scanner.nextLine(); // Consumir el salto de línea
-//                    direccionServicios.listarDireccionesPorAlumno(idAlumno);
+                    System.out.println("Ingrese el ID del alumno:");
+                    int idAlumno = scanner.nextInt();
+                    scanner.nextLine(); // Consumir el salto de línea
+                    System.out.println(DireccionRepositorio.getInstanceOf().listarPorId(idAlumno));
                     break;
                 case 5:
 //                    System.out.println("Ingrese el ID del alumno:");
