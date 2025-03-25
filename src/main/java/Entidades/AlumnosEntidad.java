@@ -10,6 +10,7 @@ public class AlumnosEntidad {
     private int edad;
     private String email;
     private List<DireccionEntidad> direcciones;
+    //private static int contador = 5;
 
     public AlumnosEntidad(int id, String nombre, String apellido, int edad, String email) {
         this.id = id;
@@ -26,6 +27,7 @@ public class AlumnosEntidad {
         this.edad = edad;
         this.email = email;
         this.direcciones = new ArrayList<DireccionEntidad>();
+        //this.id=contador++;
     }
 
     public AlumnosEntidad(){

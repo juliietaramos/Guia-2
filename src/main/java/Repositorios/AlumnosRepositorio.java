@@ -1,9 +1,16 @@
 package Repositorios;
 
+import Conecciones.SQLiteConeccion;
 import Entidades.AlumnosEntidad;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
+
 
 public class AlumnosRepositorio implements Repositorio<AlumnosEntidad> {
     private static AlumnosRepositorio instance;
@@ -15,28 +22,62 @@ public class AlumnosRepositorio implements Repositorio<AlumnosEntidad> {
         return instance;
     }
 
+//    @Override
+//    public void guardar(AlumnosEntidad alumnosEntidad) {
+//        HikariConfig config = new HikariConfig();
+//        config.setMaximumPoolSize(10);
+//        HikariDataSource dataSource = new HikariDataSource(config);
+//        try (Connection connection = dataSource.getConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement
+//                     ("INSERT INTO alumnos (nombre , apellido , edad , email) VALUES(?, ?, ?, ?)")){
+//            preparedStatement.setString(1, alumnosEntidad.getNombre());
+//            preparedStatement.setString(2,alumnosEntidad.getApellido());
+//            preparedStatement.setInt(3,alumnosEntidad.getEdad());
+//            preparedStatement.setString(4, alumnosEntidad.getEmail());
+//            preparedStatement.executeUpdate();
+//
+//        }catch (SQLException exception){
+//            System.out.println(exception.getMessage());
+//        }
+//
+//    }
+
     @Override
     public void guardar(AlumnosEntidad alumnosEntidad) {
-
+        try (Connection connection = SQLiteConeccion.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement
+                     ("INSERT INTO alumnos (nombre , apellido , edad , email) VALUES(?, ?, ?, ?)")){
+            preparedStatement.setString(1, alumnosEntidad.getNombre());
+            preparedStatement.setString(2,alumnosEntidad.getApellido());
+            preparedStatement.setInt(3,alumnosEntidad.getEdad());
+            preparedStatement.setString(4, alumnosEntidad.getEmail());
+            preparedStatement.executeUpdate();
+        }catch (SQLException exception){
+            System.out.println("Error inesperado en guardar" + exception.getMessage());
+        }
     }
 
     @Override
-    public Optional<AlumnosEntidad> encontrarPorId(int id) {
+    public Optional<AlumnosEntidad> encontrarPorId(int id) throws SQLException {
+        try (Connection connection = SQLiteConeccion.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT * from alumnos WHERE id = ?")) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(new AlumnosEntidad(
+                            resultSet.getInt("id"),
+                            resultSet.getString("nombre"),
+                            resultSet.getString("apellido"),
+                            resultSet.getInt("edad"),
+                            resultSet.getString("email")));
+                } else {
+                    return Optional.empty();
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Ocurrió un error inesperado en encontrarPorId: " + e.getMessage());
+        }
         return Optional.empty();
-    }
-
-    @Override
-    public void eliminarPorId(int id) {
-
-    }
-
-    @Override
-    public int contar() {
-        return 0;
-    }
-
-    @Override
-    public ArrayList<AlumnosEntidad> encontrarTodos() {
-        return null;
     }
 }
